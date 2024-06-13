@@ -67,7 +67,7 @@ migrate_repo() {
 
     # Create the repo on GitHub
     gh repo create "$GITHUB_ORG/$repo" --private --source=. --remote=upstream --team "$GITHUB_TEAM"
-    gh api -X PUT "/orgs/$GITHUB_ORG/teams/$GITHUB_TEAM/repos/$GITHUB_ORG/$repo" -f 'permission=write' 1>/dev/null
+    gh api -X PUT "/orgs/$GITHUB_ORG/teams/$GITHUB_TEAM/repos/$GITHUB_ORG/$repo" -f 'permission=admin' 1>/dev/null
 
     # Update the remote URL
     git remote set-url origin "https://github.com/$GITHUB_ORG/$repo.git"
