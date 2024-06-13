@@ -7,7 +7,7 @@ This repository contains two scripts, `migrate.sh` and `get_bitbucket_repos.sh`,
 - Git, jq, gh cli, and bash must be installed on your system. Windows users can install these prerequisites by running the `prepare.ps1` script. After running the script, please restart your terminal window to ensure the changes take effect.
 - A GitHub account with necessary permissions to create repositories.
 - A Bitbucket account with necessary permissions to read repositories.
-- A `.env` file with the following variables:
+- A `.env` file with the following variables (instructions on how to create an `.env` file are in the installation instructions):
   ```env
   BITBUCKET_USERNAME=your_bitbucket_username
   BITBUCKET_APP_PASSWORD=your_bitbucket_app_password (this is not the same as your login password, you need to create one)
@@ -22,14 +22,20 @@ This repository contains two scripts, `migrate.sh` and `get_bitbucket_repos.sh`,
 
 1. Clone this repository:
 
-2. Create and fill in the `.env` file with your credentials as shown above.
+2. Create a `.env` file in the root directory of the project. You can do this using the command line:
 
-3. Make the scripts executable (not needed for Windows users):
+  ```shell script
+  touch .env
+  ```
 
-    ### For MacOS/Linux:
-    ```shell script
-    chmod +x migrate.sh get_bitbucket_repos.sh
-    ```
+3. Open the `.env` file in a text editor and fill in your credentials as shown in the Prerequisites section and save it.
+
+4. Make the scripts executable (not needed for Windows users):
+
+  ### For MacOS/Linux:
+  ```shell script
+  chmod +x migrate.sh get_bitbucket_repos.sh
+  ```
 
 ## Migrate Script
 
