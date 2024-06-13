@@ -16,33 +16,16 @@ else
 fi
 
 # Check if required variables are set
-if [ -z "$BITBUCKET_USERNAME" ]; then
-    echo "ERROR: BITBUCKET_USERNAME is missing in the .env file."
-    exit 1
-fi
+required_vars=(BITBUCKET_USERNAME BITBUCKET_ORG GITHUB_ORG GITHUB_TEAM)
+for var in "${required_vars[@]}"; do
+    if [ -z "${!var}" ]; then
+        echo "ERROR: $var is missing in the .env file."
+        exit 1
+    fi
+done
 
-if [ -z "$BITBUCKET_ORG" ]; then
-    echo "ERROR: BITBUCKET_ORG is missing in the .env file."
-    exit 1
-fi
-
-if [ -z "$BITBUCKET_DEFAULT_BRANCH" ]; then
-    BITBUCKET_DEFAULT_BRANCH="main"
-fi
-
-if [ -z "$GITHUB_ORG" ]; then
-    echo "ERROR: GITHUB_ORG is missing in the .env file."
-    exit 1
-fi
-
-if [ -z "$GITHUB_DEFAULT_BRANCH" ]; then
-    GITHUB_DEFAULT_BRANCH="main"
-fi
-
-if [ -z "$GITHUB_TEAM" ]; then
-    echo "ERROR: GITHUB_TEAM is missing in the .env file."
-    exit 1
-fi
+BITBUCKET_DEFAULT_BRANCH="${BITBUCKET_DEFAULT_BRANCH:-main}"
+GITHUB_DEFAULT_BRANCH="${GITHUB_DEFAULT_BRANCH:-main}"
 
 GREEN=$(tput setaf 2)
 NO_COLOR=$(tput sgr0)
@@ -84,6 +67,7 @@ migrate_repo() {
 
     # Create the repo on GitHub
     gh repo create "$GITHUB_ORG/$repo" --private --source=. --remote=upstream --team "$GITHUB_TEAM"
+    gh api -X PUT "/orgs/$GITHUB_ORG/teams/$GITHUB_TEAM/repos/$GITHUB_ORG/$repo" -f 'permission=write' 1>/dev/null
 
     # Update the remote URL
     git remote set-url origin "https://github.com/$GITHUB_ORG/$repo.git"
