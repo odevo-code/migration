@@ -4,7 +4,7 @@
 ORG_NAME="odevo-dev"
 
 # Space-separated list of repositories to keep
-KEEP_REPOS="skills kw.cypresstests-gustav"
+KEEP_REPOS="skills kw.cypresstests-gustav migration"
 
 # Convert the space-separated list into an array
 IFS=' ' read -r -a REPO_ARRAY <<<"$KEEP_REPOS"
